@@ -108,8 +108,7 @@ AntibetaRMSD::AntibetaRMSD(const ActionOptions&ao):
   SecondaryStructureRMSD(ao)
 {
   // read in the backbone atoms
-  std::vector<unsigned> chains;
-  getBackboneChains("protein", chains);
+  std::vector<unsigned> chains; getBackboneChains("protein", chains);
 
   bool intra_chain(false), inter_chain(false);
   std::string style; parse("STYLE",style);
