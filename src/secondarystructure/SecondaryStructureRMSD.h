@@ -61,9 +61,11 @@ private:
 /// Get the index of an atom
   unsigned getAtomIndex( const unsigned& current, const unsigned& iatom ) const ;
 protected:
-/// Get the atoms in the backbone
-  void readBackboneAtoms( const std::string& backnames, std::vector<unsigned>& chain_lengths );
-/// Add a set of atoms to calculat ethe rmsd from
+/// Get the length of each backbone chain
+   void getBackboneChains(const std::string& moltype, std::vector<unsigned>& chain_lengths );
+/// Read the backbone atoms in sets of chains. Override to read from PDB or raw ATOMS
+  virtual void readBackboneAtoms(const std::string& moltype, std::vector< std::vector<AtomNumber> > &backatoms );
+/// Add a set of atoms to calculate the rmsd from
   void addColvar( const std::vector<unsigned>& newatoms );
 /// Set a reference configuration
   void setSecondaryStructure( std::vector<Vector>& structure, double bondlength, double units );

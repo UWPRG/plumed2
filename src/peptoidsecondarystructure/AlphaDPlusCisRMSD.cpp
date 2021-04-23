@@ -19,7 +19,7 @@
    You should have received a copy of the GNU Lesser General Public License
    along with plumed.  If not, see <http://www.gnu.org/licenses/>.
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
-#include "SecondaryStructureRMSD.h"
+#include "ContinuousSSRMSD.h"
 #include "core/ActionRegister.h"
 #include "core/PlumedMain.h"
 
@@ -85,62 +85,42 @@ alpha: ALPHARMSD RESIDUES=all TYPE=OPTIMAL R_0=0.1
 */
 //+ENDPLUMEDOC
 
-class AlphaDPlusCisRMSD : public SecondaryStructureRMSD {
+class AlphaDPlusCisRMSD : public ContinuousSSRMSD {
 public:
   static void registerKeywords( Keywords& keys );
   explicit AlphaDPlusCisRMSD(const ActionOptions&);
-  static constexpr int RES_IN_REF = 3; // # of residues we're comparing against
+  std::vector<Vector> getRefStructure() const override;
 };
 
 PLUMED_REGISTER_ACTION(AlphaDPlusCisRMSD, "ALPHADPLUSCISRMSD")
 
 void AlphaDPlusCisRMSD::registerKeywords(Keywords& keys ) {
-  SecondaryStructureRMSD::registerKeywords( keys );
+  ContinuousSSRMSD::registerKeywords( keys );
+}
+
+std::vector<Vector> AlphaDPlusCisRMSD::getRefStructure() const {
+  return  { Vector(-0.046,  1.837, -0.547), // CLP    i
+            Vector(-0.408,  1.267, -1.572), // OL
+            Vector(-0.806,  2.807,  0.058), // NL
+            Vector(-0.297,  3.697,  1.034), // CA
+            Vector(-2.084,  3.170, -0.401), // CB1
+            Vector( 1.245, -0.942,  0.140), // CLP    i+1
+            Vector( 1.830, -1.992,  0.061), // OL
+            Vector( 1.860,  0.187, -0.332), // NL
+            Vector( 1.310,  1.481,  0.025), // CA
+            Vector( 3.241,  0.171, -0.772), // CB1
+            Vector(-1.554, -2.433, -0.485 ), // CLP    i+2
+            Vector(-2.229, -3.435, -0.491 ), // OL
+            Vector(-0.879, -2.087,  0.638 ), // NL
+            Vector(-0.164, -0.855,  0.765 ), // CA
+            Vector(-1.017, -2.874,  1.886 ) };
 }
 
 AlphaDPlusCisRMSD::AlphaDPlusCisRMSD(const ActionOptions&ao):
   Action(ao),
-  SecondaryStructureRMSD(ao)
+  ContinuousSSRMSD(ao)
 {
-  // read in the backbone atoms
-  std::vector<unsigned> chains; readBackboneAtoms( "protein", chains);
-
-  // This constructs all conceivable sections of alpha helix in the backbone of the chains
-  int natoms = RES_IN_REF * ATOMS_IN_BB_RES;
-  unsigned nprevious=0; std::vector<unsigned> nlist(natoms);
-  for(unsigned i=0; i<chains.size(); ++i) {
-    if( chains[i]< natoms ) error("segment of backbone defined is not long enough to form an alpha helix. "
-                                  "Each backbone fragment must contain a minimum of " + std::to_string(RES_IN_REF) + " residues");
-    unsigned nres= chains[i] / ATOMS_IN_BB_RES;
-    if(chains[i] % ATOMS_IN_BB_RES != 0 ) error("backbone segment received does not contain a multiple of " +
-                                                std::to_string(ATOMS_IN_BB_RES) + " residues");
-    for(unsigned ires=0; ires<= nres - RES_IN_REF; ires++) {
-      unsigned accum= nprevious + ATOMS_IN_BB_RES * ires;
-      for(unsigned k=0; k< natoms; ++k) nlist[k] = accum + k; //indices of atoms in all_atoms
-      addColvar( nlist );
-    }
-    nprevious+=chains[i];
-  }
-
-  // Build the reference structure ( in angstroms )
-  std::vector<Vector> reference(natoms);
-  reference[0] = Vector(-0.046,  1.837, -0.547); // CLP    i
-  reference[1] = Vector(-0.408,  1.267, -1.572); // OL
-  reference[2] = Vector(-0.806,  2.807,  0.058); // NL
-  reference[3] = Vector(-0.297,  3.697,  1.034); // CA
-  reference[4] = Vector(-2.084,  3.170, -0.401); // CB1
-  reference[5] = Vector( 1.245, -0.942,  0.140); // CLP    i+1
-  reference[6] = Vector( 1.830, -1.992,  0.061); // OL
-  reference[7] = Vector( 1.860,  0.187, -0.332); // NL
-  reference[8] = Vector( 1.310,  1.481,  0.025); // CA
-  reference[9] = Vector( 3.241,  0.171, -0.772); // CB1
-  reference[10] = Vector(-1.554, -2.433, -0.485 ); // CLP    i+2
-  reference[11] = Vector(-2.229, -3.435, -0.491 ); // OL
-  reference[12] = Vector(-0.879, -2.087,  0.638 ); // NL
-  reference[13] = Vector(-0.164, -0.855,  0.765 ); // CA
-  reference[14] = Vector(-1.017, -2.874,  1.886 ); // CB1
-  // Store the secondary structure ( last number makes sure we convert to internal units nm )
-  setSecondaryStructure( reference, 0.17/atoms.getUnits().getLength(), 0.1/atoms.getUnits().getLength() );
+  init();
 }
 
 }

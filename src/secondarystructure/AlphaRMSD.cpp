@@ -102,7 +102,8 @@ AlphaRMSD::AlphaRMSD(const ActionOptions&ao):
   SecondaryStructureRMSD(ao)
 {
   // read in the backbone atoms
-  std::vector<unsigned> chains; readBackboneAtoms( "protein", chains);
+  std::vector<unsigned> chains;
+  getBackboneChains("protein", chains);
 
   // This constructs all conceivable sections of alpha helix in the backbone of the chains
   unsigned nprevious=0; std::vector<unsigned> nlist(30);

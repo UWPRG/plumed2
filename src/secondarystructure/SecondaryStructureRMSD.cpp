@@ -108,7 +108,20 @@ void SecondaryStructureRMSD::setAtomsFromStrands( const unsigned& atom1, const u
   align_atom_1=atom1; align_atom_2=atom2;
 }
 
-void SecondaryStructureRMSD::readBackboneAtoms( const std::string& moltype, std::vector<unsigned>& chain_lengths ) {
+void SecondaryStructureRMSD::getBackboneChains(const std::string& moltype, std::vector<unsigned>& chain_lengths ) {
+  std::vector< std::vector<AtomNumber> > backatoms;
+  readBackboneAtoms(moltype, backatoms);
+
+  chain_lengths.resize( backatoms.size() );
+  for(unsigned i=0; i<backatoms.size(); ++i) {
+    chain_lengths[i]=backatoms[i].size();
+    for(unsigned j=0; j<backatoms[i].size(); ++j) all_atoms.push_back( backatoms[i][j] );
+  }
+  ActionAtomistic::requestAtoms( all_atoms );
+  forcesToApply.resize( getNumberOfDerivatives() );
+}
+
+void SecondaryStructureRMSD::readBackboneAtoms(const std::string &moltype, std::vector< std::vector<AtomNumber> > &backatoms) {
   auto* moldat=plumed.getActionSet().selectLatest<GenericMolInfo*>(this);
   if( ! moldat ) error("Unable to find MOLINFO in input");
 
@@ -123,16 +136,8 @@ void SecondaryStructureRMSD::readBackboneAtoms( const std::string& moltype, std:
       log.printf("\n");
     }
   }
-  std::vector< std::vector<AtomNumber> > backatoms;
-  moldat->getBackbone( resstrings, moltype, backatoms );
 
-  chain_lengths.resize( backatoms.size() );
-  for(unsigned i=0; i<backatoms.size(); ++i) {
-    chain_lengths[i]=backatoms[i].size();
-    for(unsigned j=0; j<backatoms[i].size(); ++j) all_atoms.push_back( backatoms[i][j] );
-  }
-  ActionAtomistic::requestAtoms( all_atoms );
-  forcesToApply.resize( getNumberOfDerivatives() );
+  moldat->getBackbone( resstrings, moltype, backatoms );
 }
 
 void SecondaryStructureRMSD::addColvar( const std::vector<unsigned>& newatoms ) {
