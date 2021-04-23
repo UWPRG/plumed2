@@ -114,7 +114,7 @@ AlphaDPlusCisRMSD::AlphaDPlusCisRMSD(const ActionOptions&ao):
     unsigned nres= chains[i] / ATOMS_IN_BB_RES;
     if(chains[i] % ATOMS_IN_BB_RES != 0 ) error("backbone segment received does not contain a multiple of " +
                                                 std::to_string(ATOMS_IN_BB_RES) + " residues");
-    for(unsigned ires=0; ires< nres - ATOMS_IN_BB_RES; ires++) {
+    for(unsigned ires=0; ires<= nres - RES_IN_REF; ires++) {
       unsigned accum= nprevious + ATOMS_IN_BB_RES * ires;
       for(unsigned k=0; k< natoms; ++k) nlist[k] = accum + k; //indices of atoms in all_atoms
       addColvar( nlist );
