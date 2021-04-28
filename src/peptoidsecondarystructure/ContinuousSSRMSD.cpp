@@ -78,7 +78,7 @@ void ContinuousSSRMSD::init() {
   // get reference structure from whatever class is deriving us.
   std::vector<Vector> refstructure = getRefStructure();
   plumed_massert(refstructure.size() != 0, "reference structure must not be empty");
-  plumed_massert(refstructure.size() % ATOMS_IN_BB_RES != 0,
+  plumed_massert(refstructure.size() % ATOMS_IN_BB_RES == 0,
                  "reference structure be a multiple of " + std::to_string(ATOMS_IN_BB_RES) + " residues");
 
 
