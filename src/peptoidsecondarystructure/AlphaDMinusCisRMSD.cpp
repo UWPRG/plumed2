@@ -85,38 +85,38 @@ alpha: ALPHARMSD RESIDUES=all TYPE=OPTIMAL R_0=0.1
 */
 //+ENDPLUMEDOC
 
-class AlphaDPlusCisRMSD : public ContinuousSSRMSD {
+class AlphaDMinusCisRMSD : public ContinuousSSRMSD {
 public:
   static void registerKeywords( Keywords& keys );
-  explicit AlphaDPlusCisRMSD(const ActionOptions&);
+  explicit AlphaDMinusCisRMSD(const ActionOptions&);
   std::vector<Vector> getRefStructure() const override;
 };
 
-PLUMED_REGISTER_ACTION(AlphaDPlusCisRMSD, "ALPHADPLUSCISRMSD")
+PLUMED_REGISTER_ACTION(AlphaDMinusCisRMSD, "ALPHADMINUSCISRMSD")
 
-void AlphaDPlusCisRMSD::registerKeywords(Keywords& keys ) {
+void AlphaDMinusCisRMSD::registerKeywords(Keywords& keys ) {
   ContinuousSSRMSD::registerKeywords( keys );
 }
 
-std::vector<Vector> AlphaDPlusCisRMSD::getRefStructure() const {
-  return  { Vector( 0.652, -0.556,  1.749), // CLP    i
-            Vector(-0.528, -0.886,  1.699), // OL
-            Vector( 1.142, -0.096,  2.889), // NL
-            Vector( 2.342,  0.774,  2.859), // CA
-            Vector( 0.562, -0.466,  4.139), // CB1
-            Vector( 0.122, -0.686, -1.331), // CLP    i+1
-            Vector(-0.488, -1.336, -2.161), // OL
-            Vector( 1.052, -1.416, -0.561), // NL
-            Vector( 1.652, -0.786,  0.589), // CA
-            Vector( 1.372, -2.706, -1.041), // CB1
-            Vector(-2.438,  1.434, -1.261), // CLP    i+2
-            Vector(-3.428,  1.984, -1.761), // OL
-            Vector(-1.108,  1.604, -1.691), // NL
-            Vector(-0.038,  0.834, -1.121), // CA
-            Vector(-0.868,  2.304, -3.001) };
+std::vector<Vector> AlphaDMinusCisRMSD::getRefStructure() const {
+  return  { Vector(-0.046,  1.837, -0.547), // CLP    i
+            Vector(-0.408,  1.267, -1.572), // OL
+            Vector(-0.806,  2.807,  0.058), // NL
+            Vector(-0.297,  3.697,  1.034), // CA
+            Vector(-2.084,  3.170, -0.401), // CB1
+            Vector( 1.245, -0.942,  0.140), // CLP    i+1
+            Vector( 1.830, -1.992,  0.061), // OL
+            Vector( 1.860,  0.187, -0.332), // NL
+            Vector( 1.310,  1.481,  0.025), // CA
+            Vector( 3.241,  0.171, -0.772), // CB1
+            Vector(-1.554, -2.433, -0.485 ), // CLP    i+2
+            Vector(-2.229, -3.435, -0.491 ), // OL
+            Vector(-0.879, -2.087,  0.638 ), // NL
+            Vector(-0.164, -0.855,  0.765 ), // CA
+            Vector(-1.017, -2.874,  1.886 ) };
 }
 
-AlphaDPlusCisRMSD::AlphaDPlusCisRMSD(const ActionOptions&ao):
+AlphaDMinusCisRMSD::AlphaDMinusCisRMSD(const ActionOptions&ao):
   Action(ao),
   ContinuousSSRMSD(ao)
 {
