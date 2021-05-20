@@ -99,21 +99,21 @@ void AlphaMinusCisRMSD::registerKeywords(Keywords& keys ) {
 }
 
 std::vector<Vector> AlphaMinusCisRMSD::getRefStructure() const {
-  return  { Vector(0.561, 0.555, -1.831), // CLP    i
-            Vector(-0.329, 1.365, -2.011), // OL
-            Vector(0.721, -0.545, -2.601), // NL
-            Vector(1.971, -1.365, -2.601), // CA
-            Vector(-0.359, -1.095, -3.441), // CB1
-            Vector(0.371, -0.985, 0.919), // CLP    i+1
-            Vector(0.591, -2.085, 1.399), // OL
-            Vector(1.391, -0.125, 0.579), // NL
-            Vector(1.441, 0.785, -0.601), // CA
-            Vector(2.491, 0.065, 1.549), // CB1
-            Vector(-1.689, 0.595, 2.739), // CLP    i+2
-            Vector(-2.049, 1.665, 3.239), // OL
-            Vector(-1.609, 0.465, 1.379), // NL
-            Vector(-1.089, -0.685, 0.629), // CA
-            Vector(-2.419, 1.385, 0.649) }; // CB1
+  return  { Vector(0.561, 0.555, -1.831 ), // CLP    i
+            Vector(-0.329, 1.365, -2.011 ), // OL
+            Vector(0.721, -0.545, -2.601 ), // NL
+            Vector(1.971, -1.365, -2.601 ), // CA
+            Vector(-0.359, -1.095, -3.441 ), // CB1
+            Vector(0.371, -0.985, 0.919 ), // CLP    i+1
+            Vector(0.591, -2.085, 1.399 ), // OL
+            Vector(1.391, -0.125, 0.579 ), // NL
+            Vector(1.441, 0.785, -0.601 ), // CA
+            Vector(2.491, 0.065, 1.549 ), // CB1
+            Vector(-1.689, 0.595, 2.739 ), // CLP    i+2
+            Vector(-2.049, 1.665, 3.239 ), // OL
+            Vector(-1.609, 0.465, 1.379 ), // NL
+            Vector(-1.089, -0.685, 0.629 ), // CA
+            Vector(-2.419, 1.385, 0.649 ) }; // CB1
 }
 
 AlphaMinusCisRMSD::AlphaMinusCisRMSD(const ActionOptions&ao):
