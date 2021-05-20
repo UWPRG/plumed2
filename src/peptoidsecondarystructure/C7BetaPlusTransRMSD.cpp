@@ -99,21 +99,21 @@ void C7BetaPlusTransRMSD::registerKeywords(Keywords& keys ) {
 }
 
 std::vector<Vector> C7BetaPlusTransRMSD::getRefStructure() const {
-  return  { Vector(-0.046,  1.837, -0.547), // CLP    i
-            Vector(-0.408,  1.267, -1.572), // OL
-            Vector(-0.806,  2.807,  0.058), // NL
-            Vector(-0.297,  3.697,  1.034), // CA
-            Vector(-2.084,  3.170, -0.401), // CB1
-            Vector( 1.245, -0.942,  0.140), // CLP    i+1
-            Vector( 1.830, -1.992,  0.061), // OL
-            Vector( 1.860,  0.187, -0.332), // NL
-            Vector( 1.310,  1.481,  0.025), // CA
-            Vector( 3.241,  0.171, -0.772), // CB1
-            Vector(-1.554, -2.433, -0.485 ), // CLP    i+2
-            Vector(-2.229, -3.435, -0.491 ), // OL
-            Vector(-0.879, -2.087,  0.638 ), // NL
-            Vector(-0.164, -0.855,  0.765 ), // CA
-            Vector(-1.017, -2.874,  1.886 ) };
+  return  { Vector(-2.424, -0.383, 1.022), // CLP    i
+            Vector(-2.834, -1.493, 1.432), // OL
+            Vector(-3.294, 0.447, 0.242), // NL
+            Vector(-4.704, -0.033, 0.142), // CA
+            Vector(-2.814, 1.597, -0.538), // CB1
+            Vector(0.856, 0.167, -0.268), // CLP    i+1
+            Vector(0.646, 1.387, -0.138), // OL
+            Vector(0.056, -0.653, 0.532), // NL
+            Vector(-0.984, -0.103, 1.332), // CA
+            Vector(0.026, -2.113, 0.422), // CB1
+            Vector(3.906, 0.117, -0.328), // CLP    i+2
+            Vector(3.516, -0.533, 0.642), // OL
+            Vector(3.026, 0.397, -1.248), // NL
+            Vector(1.856, -0.413, -1.208), // CA
+            Vector(3.166, 1.617, -2.038) };
 }
 
 C7BetaPlusTransRMSD::C7BetaPlusTransRMSD(const ActionOptions&ao):
